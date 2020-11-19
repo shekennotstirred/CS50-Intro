@@ -14,29 +14,22 @@ int main(void)
     //prompt user for credit card number
     long card = get_long("Number: ");
     long credit_card = card;
-    int i = 1, odd_sum = 0, even_sum = 0, p;
+    int i = 1, digits_sum = 0, p;
 
     //luhn's algorithm
     while (card > 0)
     {
-        //calculate sum of odd digits from the right
-        if (i % 2 != 0)
-        {
-            odd_sum += (card % 10);
-        }
-
-        //multiply even digits from the right by 2 and calculate sum of sum of the product's digits
-        else
-        {
-            p = 2 * (card % 10);
-            even_sum += get_sum_digits(p);
-        }
+        /*calculate sum of odd digits from the right,
+        multiply even digits from the right by 2 and
+        calculate sum of sum of the product's digits
+        */
+        digits_sum += (i % 2 != 0) ? (card % 10) : get_sum_digits(2 * (card % 10));
         card /= 10;
         i++;
     }
 
     //if the final sum doesn't end with zero, display invalid
-    if (((odd_sum + even_sum) % 10) != 0)
+    if ((digits_sum % 10) != 0)
     {
         printf("INVALID\n");
     }
